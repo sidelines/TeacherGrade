@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 主配置文件 -->
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="com.school.model.Teacher" alias="teacher" />
+		<typeAlias type="com.school.model.Checker" alias="checker" />
+		<typeAlias type="com.school.model.Admin" alias="admin" />
+		<typeAlias type="com.school.model.BianHao" alias="bianhao"/>
+		<typeAlias type="com.school.model.PassScore" alias="passScore"/>
+		<typeAlias type="com.school.model.TeachPass" alias="teacherPass"/>
+		<typeAlias type="com.school.model.Total" alias="total"/>
+		<typeAlias type="com.school.model.add.ShowAllTeacherPassInfo" alias="showAllTeacherPassInfo"/>
+		<typeAlias type="com.school.model.add.ShowAdminPageDate" alias="showAdminPageDate"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="com/school/resource/Teacher.xml" />
+		<mapper resource="com/school/resource/Checker.xml" />
+		<mapper resource="com/school/resource/Admin.xml" />
+		<mapper resource="com/school/resource/TeacherPass.xml" />
+	</mappers>
+
+</configuration>

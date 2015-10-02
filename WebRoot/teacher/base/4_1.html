@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body,div,table，select,h3,tr,td{margin:0; padding:0; list-style:none;}
+.h3{font-size:16px; margin:10px 0;}
+.table{border:1px solid #000; margin-left:100px; border-radius:5px; padding:20px;}
+table thead tr{font-weight:bold; margin-bottom:20px;}
+table tr td{ font-size:12px;}
+</style>
+<title>aaa</title>
+<script language="JavaScript" >
+	<!--下拉框级联开始-->
+	var cityList = new Array( ); //定义城市数组
+	cityList['北京'] = ['朝阳区','东城区','西城区', '海淀区','宣武区','丰台区','怀柔','延庆','房山'];
+	cityList['上海'] = ['宝山区','长宁区','丰贤区', '虹口区','黄浦区','青浦区','南汇区','徐汇区','卢湾区'];
+	cityList['广州'] = ['天河区','海珠区','南沙区', '白云区','嘉湾区','越秀区','黄埔区','罗岗区','番寓区','花都区'];
+	cityList['深圳'] = ['福田区', '罗湖区', '盐田区', '宝安区', '龙岗区', '南山区', '深圳周边'];
+	cityList['重庆'] =['俞中区', '南岸区', '江北区', '沙坪坝区', '九龙坡区', '渝北区', '大渡口区', '北碚区', '巴南区', '万盛区', '涪凌', '江津'];
+	cityList['天津'] = ['和平区', '河西区', '南开区', '河北区', '河东区', '红桥区', '塘古区', '开发区', '西青区', '津南区','东丽区'];
+	function changeCity( )
+	{
+	var province=document.myform.province.value;
+	document.myform.city.options.length=0;
+	for (var i in cityList)
+	{
+	if (i == province)
+	{
+	for (var j in cityList[i]) //根把对应城市动态创建区域option
+	{
+	document.myform.city.options.add(new Option(cityList[i][j], cityList[i][j]));
+	}
+	}
+	}
+	document.myform.city.options.selctIndex=0;
+	}
+	
+	function loadAll( ) //动态创建城市option
+	{ for (var i in cityList)
+	{ document.myform.province.options.add(new Option(i, i));
+	}
+	document.myform.province.selectedIndex = 0;
+	}
+	
+
+</script>
+</head>
+
+<body onLoad="loadAll( )">
+	<div>
+    	<p>
+        	<select>
+            	<option value="1"><a href="4_1.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_2.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_3.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_4.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_5.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_6.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_7.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_8.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_9.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_10.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_11.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_12.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_13.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_14.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_15.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_16.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_17.html">--请选择区域--</a></option>
+            	<option value="1"><a href="4_18.html">--请选择区域--</a></option>
+            </select>
+        </p>
+        <table width="500" class="table">
+            <form action="" method="post" name="myform">
+                <tr>
+                    <td height="30">
+                        <select name="province" id="province" onChange="changeCity()">
+                        <option>--请选择城市--</option></select>
+                        <select name="city" id="city" >
+                            <option>--请选择区域--</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                	<td height="5"><input type="file" value="上传图片" /><input type="file" value="上传文件" /></td>
+                </tr>
+            </form>
+            <tr align="right"><td height="5"><input name="b1" type="submit" value=" 查 询 "></td></tr>
+        </table>
+    </div>
+</body>
+</html>

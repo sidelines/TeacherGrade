@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.school.dao.AdminDao">
+	<!-- 用户登录 -->
+	<select id="adminLogin" resultType="admin">
+		select * from t_admin where adminName=#{adminName} and adminPass=#{adminPass};
+	</select>
+	
+	<update id="updateAdmin" >
+		update t_admin set adminPass=#{adminPass} where adminName=#{adminName}
+	</update>
+
+	<!-- 取教师数据 -->
+	<select id="showAdminPageDate" resultType="showAdminPageDate">
+		select t_depart.departname,t_teacher.tname,sum(score) as score from t_passscore,
+		t_teacherpass,t_teacher,t_depart where t_teacherpass.pid = t_passscore.pid and
+		t_teacherpass.tid=t_teacher.tid and t_teacherpass.departid=t_depart.departid group
+		by t_teacherpass.tid
+	</select>
+	
+	<!-- 取系别数据 -->
+	<select id="showAdminPageDepart" resultType="showAdminPageDate">
+		select t_depart.departname,sum(score) as score from t_passscore,t_teacherpass,t_depart
+		 where t_teacherpass.pid = t_passscore.pid and t_teacherpass.departid=t_depart.departid
+		  group by t_teacherpass.departid;
+	</select>
+</mapper>
+

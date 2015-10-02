@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.school.dao.CheckerDao">
+	<!-- 用户登录 -->
+	<select id="checkerLogin" resultType="checker">
+		select * from t_checker where cname=#{cname} and cpass=#{cpass};
+	</select>
+
+</mapper>

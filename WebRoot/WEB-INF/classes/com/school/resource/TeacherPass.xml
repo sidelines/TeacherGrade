@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.school.dao.TeacherPassDao">
+
+	<!-- 插入教师密码 -->
+	<insert id="addpass" parameterType="teacherPass">
+		replace into t_teacherpass(eviZip) values(#{eviZip});
+	</insert>
+	
+	<!-- 查找最后一条tcp_id -->
+	<select id="findlastdateID" parameterType="int" resultType="int">
+		select tcp_id from t_teacherpass order by tcp_id desc limit 1;
+	</select>
+	
+	<!-- 通过最后一条tcp_id更新信息 -->
+	<update id="updatepass" parameterType="teacherPass">
+		update t_teacherpass set tid=#{tid} ,pid=#{pId},date=now(),departid=#{departId},depart_state='2'
+		where tcp_id=#{tcp_id}
+	</update>
+	
+	<!-- 通过老师的id返回教师的departid -->
+	<select id="getTeacherInfoById" resultType="String" parameterType="teacher">
+		select departid from t_teacher where tid=#{tid};
+	</select>
+	
+	<!-- 通过category返回bid-->
+	<select id="getPidByCategory" resultType="String" parameterType="bianhao">
+		select bid from t_bianhao where category=#{category};
+	</select>
+	
+	<!-- 通过bid返回category-->
+	<select id="getCategoryByPid" resultType="String" parameterType="String">
+		select category from t_bianhao where bid=#{bid};
+	</select>
+	
+	<!-- 查询所有老师通过的审核记录    不能区分系别-->
+	<select id="ShowAllTeacherPassInfo" resultType="ShowAllTeacherPassInfo">
+		select t_teacher.tname,t_teacherpass.pid,t_teacherpass.tid,t_passscore.score 
+		
+		from t_teacher,t_teacherpass,t_passscore 
+		
+		where t_teacherpass.tid = t_teacher.tid and t_teacherpass.depart_state=1  
+		
+		and t_teacherpass.pid=t_passscore.pid;
+	</select>
+	
+	
+	<!-- 通过审核员的系别查询本系审核未通过的所有教师的业绩 -->
+	<select id="ShowAllTeacherNotPassInfo" resultType="showAllTeacherPassInfo" parameterType="checker">
+		select distinct t_teacher.tname,t_teacherpass.pid,t_teacherpass.tid,t_passscore.score,
+		
+		t_teacherpass.eviPic,t_teacherpass.eviZip,t_teacherpass.depart_state
+		
+		from t_teacher,t_teacherpass,t_depart,t_passscore
+
+		where t_teacherpass.tid = t_teacher.tid   and
+		
+		 t_teacherpass.pid=t_passscore.pid
+		
+		and t_teacherpass.depart_state=2;
+	</select>
+	
+	<!-- 管理员通过教师的名字和教学业绩编号对该项的教学业绩进行审核 -->
+	<select id="checkT" parameterType="showAllTeacherPassInfo">
+		update t_teacherpass set depart_state=1 where pid=#{pid} and 
+		
+		tid=#{tid};	
+	</select>
+	
+	<!-- 管理员通过教师的名字和教学业绩编号对该项的教学业绩进行审核 -->
+	<select id="checkT2" parameterType="showAllTeacherPassInfo">
+		update t_teacherpass set depart_state=0,depart_remark=#{depart_remark} where pid=#{pid} and 
+		
+		tid=#{tid};	
+	</select>
+	
+	
+	<select id="delT" parameterType="showAllTeacherPassInfo">
+		delete from t_teacherpass where pid=#{pid} and tid=#{tid};
+		
+	</select>
+	
+	<!--教师管理自己的业绩  审核通过 -->
+	<select id="manageT" resultType="showAllTeacherPassInfo" parameterType="teacher">
+		
+		select t_teacher.tname,t_teacherpass.tid,t_teacherpass.pid,t_passscore.score
+		
+		 from t_teacher,t_teacherpass,t_passscore where tname=#{tname} and 
+		 
+		 t_teacherpass.depart_state=1 and t_teacher.tid=t_teacherpass.tid and 
+		 
+		 t_passscore.pid=t_teacherpass.pid group by pid;
+	</select>
+	<!--教师管理自己的业绩  未通过 -->
+	<select id="manageT2" resultType="showAllTeacherPassInfo" parameterType="teacher">
+		
+		select t_teacher.tname,t_teacherpass.tid,t_teacherpass.pid,t_passscore.score
+		
+		 from t_teacher,t_teacherpass,t_passscore where tname=#{tname} and 
+		 
+		 t_teacherpass.depart_state=0 and t_teacher.tid=t_teacherpass.tid and 
+		 
+		 t_passscore.pid=t_teacherpass.pid group by pid;
+	</select>
+	<!--教师管理自己的业绩  未审核 -->
+	<select id="manageT3" resultType="showAllTeacherPassInfo" parameterType="teacher">
+		
+		select t_teacher.tname,t_teacherpass.tid,t_teacherpass.pid,t_passscore.score
+		
+		 from t_teacher,t_teacherpass,t_passscore where tname=#{tname} and 
+		 
+		 t_teacherpass.depart_state=2 and t_teacher.tid=t_teacherpass.tid and 
+		 
+		 t_passscore.pid=t_teacherpass.pid group by pid;
+	</select>
+	
+	
+</mapper>
